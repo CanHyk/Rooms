@@ -2,10 +2,56 @@ package com.example.rooms
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import com.example.rooms.databinding.ActivityRegisterBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
+    lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding= ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.kayitolButton.setOnClickListener() {
+            if (binding.etMail.text.isNotEmpty() &&binding.etSifre.text.isNotEmpty() && binding.etSifre2.text.isNotEmpty()) {
+
+                    if(binding.etSifre.text.toString().equals(binding.etSifre2.text.toString())) {
+                        yeniuyekayit(binding.etMail.text.toString(),binding.etSifre.text.toString())
+                    }else{
+                        Toast.makeText(this,"Şifreler Aynı Değil",Toast.LENGTH_SHORT).show()
+                    }
+            }else {
+                Toast.makeText(this, "Boş Alanları Doldurunuz.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun yeniuyekayit(mail: String, sifre: String) {
+        progressBarGoster()
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(mail,sifre)
+            .addOnCompleteListener(object: OnCompleteListener<AuthResult> {
+                override fun onComplete(p0: Task<AuthResult>) {
+                    if(p0.isSuccessful) {
+                        Toast.makeText(this@RegisterActivity, "Uye Kaydi Yapildi "+ FirebaseAuth.getInstance().currentUser?.uid, Toast.LENGTH_SHORT).show()
+                        FirebaseAuth.getInstance().signOut()
+                    }else{
+                        Toast.makeText(this@RegisterActivity, "Uye Kaydedilirken hata oldu  "+p0.exception?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        progressBarGizle()
+
+    }
+    private fun progressBarGoster(){
+        binding.progressBar!!.visibility= View.VISIBLE
+    }
+
+    private fun progressBarGizle(){
+        binding.progressBar!!.visibility= View.INVISIBLE
     }
 }
