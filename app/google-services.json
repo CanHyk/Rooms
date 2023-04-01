@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "479100067920",
+    "project_id": "rooms-aad4b",
+    "storage_bucket": "rooms-aad4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479100067920:android:eb31c99cb97e9fb2213155",
+        "android_client_info": {
+          "package_name": "com.example.rooms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479100067920-8rp8gtfjpiqrggrihr92j2io8pajc2tt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rooms",
+            "certificate_hash": "e6b505c587009c245f03d5d50722768944be57b2"
+          }
+        },
+        {
+          "client_id": "479100067920-4peccj11iqet511u5tkdte4ajvr1er7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMq5rT3j2dYLeQcIP_zs-v6MqbaGukqwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479100067920-4peccj11iqet511u5tkdte4ajvr1er7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
