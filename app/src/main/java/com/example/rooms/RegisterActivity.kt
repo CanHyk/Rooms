@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.makeText(this,"Şifreler Aynı Değil",Toast.LENGTH_SHORT).show()
                     }
             }else {
-                Toast.makeText(this, "Boş Alanları Doldurunuz.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Boş Alanları Doldurunuz", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -37,15 +37,35 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(object: OnCompleteListener<AuthResult> {
                 override fun onComplete(p0: Task<AuthResult>) {
                     if(p0.isSuccessful) {
-                        Toast.makeText(this@RegisterActivity, "Uye Kaydi Yapildi "+ FirebaseAuth.getInstance().currentUser?.uid, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@RegisterActivity, "Kayıt Başarılı ID: "+ FirebaseAuth.getInstance().currentUser?.uid, Toast.LENGTH_SHORT).show()
+                        onayMailiGonder()
                         FirebaseAuth.getInstance().signOut()
+
                     }else{
-                        Toast.makeText(this@RegisterActivity, "Uye Kaydedilirken hata oldu  "+p0.exception?.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@RegisterActivity, "Hatalı Kayıt. "+p0.exception?.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             })
         progressBarGizle()
 
+    }
+
+    private fun onayMailiGonder (){
+        var kullanici=FirebaseAuth.getInstance().currentUser
+        if (kullanici !=null){
+            kullanici.sendEmailVerification()
+                .addOnCompleteListener(object :OnCompleteListener<Void>{
+                    override fun onComplete(p0: Task<Void>) {
+
+                        if (p0.isSuccessful){
+                            Toast.makeText(this@RegisterActivity, "Mail Kutunuzu Kontrol Edin ve Onaylayin  "+p0.exception?.message, Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(this@RegisterActivity, "Onay Kodu Gönderilemedi   "+p0.exception?.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                })
+        }
     }
     private fun progressBarGoster(){
         binding.progressBar!!.visibility= View.VISIBLE
