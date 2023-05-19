@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                     override fun onComplete(p0: Task<Void>) {
 
                         if (p0.isSuccessful){
-                            Toast.makeText(this@RegisterActivity, "Mail Kutunuzu Kontrol Edin ve Onaylayin  "+p0.exception?.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@RegisterActivity, "Mail Kutunuzu Kontrol Edin ve Onaylayin  ", Toast.LENGTH_SHORT).show()
                         }else{
                             Toast.makeText(this@RegisterActivity, "Onay Kodu Gönderilemedi   "+p0.exception?.message, Toast.LENGTH_SHORT).show()
                         }

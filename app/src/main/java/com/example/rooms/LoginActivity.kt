@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
 
+    lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,35 +41,21 @@ class LoginActivity : AppCompatActivity() {
                 )
                     .addOnCompleteListener(object : OnCompleteListener<AuthResult> {
                         override fun onComplete(p0: Task<AuthResult>) {
-
+                            initMyAuthStateListener()
                             if (p0.isSuccessful) {
                                 progressBarGizle()
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this@LoginActivity, "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
                                 FirebaseAuth.getInstance().signOut()
                             } else {
                                 progressBarGizle()
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Giriş Hatası : " + p0.exception?.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this@LoginActivity, "Giriş Hatası : " + p0.exception?.message, Toast.LENGTH_SHORT).show()
                             }
-
                         }
-
                     })
-
-
             } else {
-                Toast.makeText(this@LoginActivity, "Boş Alanları Doldurunuz", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@LoginActivity, "Boş Alanları Doldurunuz", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun progressBarGoster() {
@@ -83,13 +69,13 @@ class LoginActivity : AppCompatActivity() {
     private fun initMyAuthStateListener() {
         mAuthStateListener = object : FirebaseAuth.AuthStateListener {
             override fun onAuthStateChanged(p0: FirebaseAuth) {
-                var kullanici=p0.currentUser
+                var kullanici = p0.currentUser
 
-                if (kullanici !=null){
-                    if (kullanici.isEmailVerified){
+                if (kullanici != null) {
+                    if (kullanici.isEmailVerified) {
                         Toast.makeText(this@LoginActivity, "Mail Onayı Başarılı. Giriş Yapılabilir", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this@LoginActivity, "lütfen Mail Adresinizi Onaylayın", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@LoginActivity, "Lütfen Mail Adresinizi Onaylayın", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
