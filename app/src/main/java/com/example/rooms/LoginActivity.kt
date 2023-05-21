@@ -29,6 +29,14 @@ class LoginActivity : AppCompatActivity() {
             var intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+        binding.tvoMailTekrarGonder.setOnClickListener {
+            var dialogGoster=onayMailTekrarGonderFragment()
+            dialogGoster.show(supportFragmentManager,"Diyaloğu Göster")
+        }
+        binding.tvSFreTekrarYolla.setOnClickListener(){
+            var dialogSifreyiTekrarGonder=SifremiUnuttumDialogFragment()
+            dialogSifreyiTekrarGonder.show(supportFragmentManager,"gosterdialogsifre")
+        }
 
         binding.btngirisyap.setOnClickListener() {
 
@@ -41,11 +49,12 @@ class LoginActivity : AppCompatActivity() {
                 )
                     .addOnCompleteListener(object : OnCompleteListener<AuthResult> {
                         override fun onComplete(p0: Task<AuthResult>) {
-                            initMyAuthStateListener()
                             if (p0.isSuccessful) {
                                 progressBarGizle()
-                                Toast.makeText(this@LoginActivity, "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
-                                FirebaseAuth.getInstance().signOut()
+                               // Toast.makeText(this@LoginActivity, "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
+                                    if (!p0.result.user!!.isEmailVerified){
+                                        FirebaseAuth.getInstance().signOut()
+                                    }
                             } else {
                                 progressBarGizle()
                                 Toast.makeText(this@LoginActivity, "Giriş Hatası : " + p0.exception?.message, Toast.LENGTH_SHORT).show()
@@ -74,22 +83,25 @@ class LoginActivity : AppCompatActivity() {
                 if (kullanici != null) {
                     if (kullanici.isEmailVerified) {
                         Toast.makeText(this@LoginActivity, "Mail Onayı Başarılı. Giriş Yapılabilir", Toast.LENGTH_SHORT).show()
+                        var intent=Intent(this@LoginActivity,MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "Lütfen Mail Adresinizi Onaylayın", Toast.LENGTH_SHORT).show()
+                        //FirebaseAuth.getInstance().signOut()
                     }
                 }
             }
         }
-
     }
 
     override fun onStart() {
         super.onStart()
-        FirebaseAuth.getInstance().addAuthStateListener { mAuthStateListener }
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthStateListener)
     }
 
     override fun onStop() {
         super.onStop()
-        FirebaseAuth.getInstance().removeAuthStateListener { mAuthStateListener }
+        FirebaseAuth.getInstance().removeAuthStateListener(mAuthStateListener)
     }
 }
