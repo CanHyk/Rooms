@@ -20,6 +20,16 @@ class MainActivity : AppCompatActivity() {
         initAuthStateListener()
     }
 
+    private fun setKullaniciBilgileri(){
+        var kullanici =FirebaseAuth.getInstance().currentUser
+       if ( kullanici!=null){
+        binding.tvKullaniciAdi.text=if (kullanici.displayName.isNullOrEmpty())"Tanımlanmadı" else kullanici.displayName
+           binding.tvKullaniciSifre.text=kullanici.email
+           binding.tvKullaniciUid.text=kullanici.uid
+        }
+    }
+
+
     private fun initAuthStateListener() {
         myAuthStateListener = object : FirebaseAuth.AuthStateListener{
             override fun onAuthStateChanged(p0: FirebaseAuth){
@@ -64,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         kullaniciyiKontrolEt()
+        setKullaniciBilgileri()
     }
 
     private fun kullaniciyiKontrolEt() {
