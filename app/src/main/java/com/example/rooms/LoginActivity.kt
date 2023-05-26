@@ -51,9 +51,14 @@ class LoginActivity : AppCompatActivity() {
                         override fun onComplete(p0: Task<AuthResult>) {
                             if (p0.isSuccessful) {
                                 progressBarGizle()
-                               // Toast.makeText(this@LoginActivity, "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
+
+
                                     if (!p0.result.user!!.isEmailVerified){
-                                        FirebaseAuth.getInstance().signOut()
+                                        //FirebaseAuth.getInstance().signOut()
+                                        Toast.makeText(this@LoginActivity, "Giriş Başarılı : " + FirebaseAuth.getInstance().currentUser?.email, Toast.LENGTH_SHORT).show()
+                                        var intent=Intent(this@LoginActivity,MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
                                     }
                             } else {
                                 progressBarGizle()

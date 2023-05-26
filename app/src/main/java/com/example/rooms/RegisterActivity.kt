@@ -1,5 +1,6 @@
 package com.example.rooms
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -18,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.kayitolButton.setOnClickListener() {
+
             if (binding.etMail.text.isNotEmpty() &&binding.etSifre.text.isNotEmpty() && binding.etSifre2.text.isNotEmpty()) {
 
                     if(binding.etSifre.text.toString().equals(binding.etSifre2.text.toString())) {
@@ -36,18 +40,32 @@ class RegisterActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(mail,sifre)
             .addOnCompleteListener(object: OnCompleteListener<AuthResult> {
                 override fun onComplete(p0: Task<AuthResult>) {
-                    if(p0.isSuccessful) {
-                        Toast.makeText(this@RegisterActivity, "Kayıt Başarılı ID: "+ FirebaseAuth.getInstance().currentUser?.uid, Toast.LENGTH_SHORT).show()
+                    if (p0.isSuccessful) {
+                        progressBarGizle()
                         onayMailiGonder()
-                        FirebaseAuth.getInstance().signOut()
 
-                    }else{
+                        var veritabaninEklenecekKullanici=Kullanici ()
+                        veritabaninEklenecekKullanici.isim=binding.etMail.text.toString().substring(0,binding.etMail.text.toString().indexOf("@"))
+                        veritabaninEklenecekKullanici.kullanici_id= FirebaseAuth.getInstance().currentUser?.uid
+                        veritabaninEklenecekKullanici.profil_resmi=""
+                        veritabaninEklenecekKullanici.telefon="123"
+                        veritabaninEklenecekKullanici.seviye="1"
+                                FirebaseDatabase.getInstance().reference
+                                .child("kullanici")
+                                .child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                                .setValue(veritabaninEklenecekKullanici).addOnCompleteListener { task->
+                                    if (task.isSuccessful){
+                                        Toast.makeText(this@RegisterActivity,"Üye Kaydı Başarılı  ID:"+FirebaseAuth.getInstance().currentUser?.uid,Toast.LENGTH_SHORT).show()
+                                        FirebaseAuth.getInstance().signOut()
+                                        loginSayfasinaYonlendir()
+                                    }
+                                }
+                }else{
+                    progressBarGizle()
                         Toast.makeText(this@RegisterActivity, "Hatalı Kayıt. "+p0.exception?.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             })
-        progressBarGizle()
-
     }
 
     private fun onayMailiGonder (){
@@ -56,7 +74,6 @@ class RegisterActivity : AppCompatActivity() {
             kullanici.sendEmailVerification()
                 .addOnCompleteListener(object :OnCompleteListener<Void>{
                     override fun onComplete(p0: Task<Void>) {
-
                         if (p0.isSuccessful){
                             Toast.makeText(this@RegisterActivity, "Mail Kutunuzu Kontrol Edin ve Maili Onaylayin  ", Toast.LENGTH_SHORT).show()
                         }else{
@@ -73,5 +90,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun progressBarGizle(){
         binding.progressBar!!.visibility= View.INVISIBLE
+    }
+    private fun loginSayfasinaYonlendir(){
+        var intent= Intent(this@RegisterActivity,LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
