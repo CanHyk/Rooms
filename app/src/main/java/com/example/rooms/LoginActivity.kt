@@ -25,14 +25,17 @@ class LoginActivity : AppCompatActivity() {
 
         initMyAuthStateListener()
 
+
         binding.tvkayitol?.setOnClickListener() {
             var intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
         binding.tvoMailTekrarGonder.setOnClickListener {
             var dialogGoster=onayMailTekrarGonderFragment()
             dialogGoster.show(supportFragmentManager,"Diyaloğu Göster")
         }
+
         binding.tvSFreTekrarYolla.setOnClickListener(){
             var dialogSifreyiTekrarGonder=SifremiUnuttumDialogFragment()
             dialogSifreyiTekrarGonder.show(supportFragmentManager,"gosterdialogsifre")
@@ -93,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "Lütfen Mail Adresinizi Onaylayın", Toast.LENGTH_SHORT).show()
-                        //FirebaseAuth.getInstance().signOut()
+                        FirebaseAuth.getInstance().signOut()
                     }
                 }
             }

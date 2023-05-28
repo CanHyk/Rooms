@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initAuthStateListener() {
         myAuthStateListener = object : FirebaseAuth.AuthStateListener{
             override fun onAuthStateChanged(p0: FirebaseAuth){
