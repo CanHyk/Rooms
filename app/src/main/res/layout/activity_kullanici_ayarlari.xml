@@ -77,6 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:backgroundTint="#A0D8B3"
+
         android:text="Şifre Sıfırla"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,6 +89,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:backgroundTint="#A0D8B3"
+
         android:text="Kaydet"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,6 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Mail-Şifre Güncelle"
+        android:backgroundTint="#A0D8B3"
+
         android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/btnDegisiklikleriKaydet"
         app:layout_constraintStart_toEndOf="@+id/btnSifreGonder"
@@ -163,9 +169,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
+            android:backgroundTint="#A0D8B3"
             android:text="Şifreyi Güncelle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etYeniSifre" />
+            app:layout_constraintTop_toBottomOf="@+id/etYeniSifre"
+            app:strokeColor="@color/teal_200" />
 
         <Button
             android:id="@+id/btnMailGuncelle"
@@ -173,7 +181,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
+
             android:layout_marginEnd="30dp"
+            android:backgroundTint="#A0D8B3"
             android:text="Maili Güncelle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnSifreGuncelle"

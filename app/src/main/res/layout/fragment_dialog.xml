@@ -36,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#A0D8B3"
+
         android:text="Gönder"
         app:layout_constraintEnd_toEndOf="@+id/etDialogSifre"
         app:layout_constraintTop_toBottomOf="@+id/etDialogSifre" />
@@ -45,6 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#A0D8B3"
+
         android:text="Iptal"
         app:layout_constraintStart_toStartOf="@+id/etDialogSifre"
         app:layout_constraintTop_toBottomOf="@+id/etDialogSifre" />

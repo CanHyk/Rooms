@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#A0D8B3"
+
         android:text="Iptal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSıfreyıTekrarGonder" />
@@ -24,6 +26,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="44dp"
         android:text="Gönder"
+        android:backgroundTint="#A0D8B3"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSıfreyıTekrarGonder" />
 
